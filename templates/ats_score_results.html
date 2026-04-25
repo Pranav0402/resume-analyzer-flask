@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ATS Score Results</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+
+<body class="bg-gray-100 text-gray-900 min-h-screen p-6">
+
+    <div class="max-w-4xl mx-auto bg-white shadow-xl rounded-xl p-8">
+
+        <!-- HEADER -->
+        <h1 class="text-4xl font-extrabold text-center text-indigo-700 mb-6">
+            ✅ ATS Compatibility Score
+        </h1>
+
+        <!-- SCORE -->
+        <div class="text-center mb-8">
+            <p class="text-2xl font-semibold">
+                Score:
+                <span class="text-green-600">{{ result.score }}%</span>
+            </p>
+
+            <div class="w-full bg-gray-300 h-4 rounded-full mt-4 overflow-hidden">
+                <div class="h-4 transition-all duration-500
+        {% if result.score >= 80 %}
+          bg-green-500
+        {% elif result.score >= 50 %}
+          bg-yellow-400
+        {% else %}
+          bg-red-500
+        {% endif %}" style="width: {{ result.score }}%;">
+                </div>
+            </div>
+
+            <p class="text-sm mt-3 text-gray-600">
+                {% if result.score >= 80 %} 🚀 Excellent match! {% elif result.score >= 50 %} ⚠️ Decent match, can be improved. {% else %} ❌ Low match – improve your resume. {% endif %}
+            </p>
+        </div>
+
+        <!-- COMPONENT BREAKDOWN -->
+        {% if result.components %}
+        <div class="grid grid-cols-2 gap-4 mb-8 text-sm">
+            <div>Skills Match: <strong>{{ result.components.skills }}%</strong></div>
+            <div>Experience Match: <strong>{{ result.components.experience }}%</strong></div>
+            <div>Keyword Match: <strong>{{ result.components.keywords }}%</strong></div>
+            <div>Education Match: <strong>{{ result.components.education }}%</strong></div>
+        </div>
+        {% endif %}
+
+        <!-- MATCHED PAIRS -->
+        <h2 class="text-2xl font-bold text-green-700 mb-4">
+            ✅ Matched JD–Resume Pairs
+        </h2>
+
+        {% if result.matched_pairs and result.matched_pairs|length > 0 %}
+        <ul class="space-y-4">
+            {% for pair in result.matched_pairs %}
+            <li class="bg-green-50 p-4 rounded-lg border border-green-200">
+                <p><strong>JD Requirement:</strong> {{ pair.jd }}</p>
+                <p><strong>Resume Evidence:</strong> {{ pair.resume }}</p>
+                <p class="text-sm text-gray-600 mt-1">
+                    Match Confidence:
+                    <span class="font-semibold">{{ pair.similarity }}%</span>
+                </p>
+            </li>
+            {% endfor %}
+        </ul>
+        {% else %}
+        <p class="text-gray-600 italic">
+            No sentence-level matches found. ATS score is based on role–skill alignment.
+        </p>
+        {% endif %}
+
+        <!-- MISSING REQUIREMENTS -->
+        {% if result.unmatched and result.unmatched|length > 0 %}
+        <div class="mt-10">
+            <h2 class="text-2xl font-bold text-red-700 mb-4">
+                ❌ Missing / Unmatched Requirements
+            </h2>
+
+            <p class="text-sm text-gray-600 mb-3">
+                Consider adding or strengthening the following skills:
+            </p>
+
+            <div class="flex flex-wrap gap-2">
+                {% for miss in result.unmatched %}
+                <span class="px-3 py-1 bg-red-100 text-red-700 rounded-full text-sm">
+        {{ miss }}
+      </span> {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+
+        <!-- SUGGESTIONS -->
+        {% if result.suggestions and result.suggestions|length > 0 %}
+        <div class="mt-10">
+            <h2 class="text-2xl font-bold text-indigo-700 mb-4">
+                💡 ATS Improvement Suggestions
+            </h2>
+
+            <ul class="list-disc pl-6 space-y-2 text-gray-700">
+                {% for tip in result.suggestions %}
+                <li>{{ tip }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+
+        <!-- ACTION BUTTONS -->
+        <div class="flex gap-4 justify-center mt-12">
+            <a href="/" class="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300">
+      ← Back
+    </a>
+            <a href="/" class="px-4 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-700">
+      Back to Home
+    </a>
+        </div>
+
+    </div>
+
+</body>
+
+</html>

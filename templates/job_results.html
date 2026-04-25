@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Prediction Results - ResumeAI</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        body {
+            background: #f5f7fb;
+            font-family: Segoe UI, sans-serif;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: auto;
+            padding: 20px;
+        }
+        
+        .card {
+            background: #fff;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, .08);
+        }
+        
+        .job {
+            display: flex;
+            gap: 20px;
+            padding: 20px 0;
+            border-bottom: 1px solid #e9ecef;
+        }
+        
+        .job:last-child {
+            border-bottom: none;
+        }
+        
+        .icon {
+            width: 60px;
+            height: 60px;
+            background: #4361ee;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+        }
+        
+        .progress {
+            background: #e9ecef;
+            height: 8px;
+            border-radius: 6px;
+            overflow: hidden;
+        }
+        
+        .bar {
+            height: 100%;
+            background: #4361ee;
+            transition: width 0.4s ease;
+        }
+        
+        .tag {
+            display: inline-block;
+            padding: 6px 14px;
+            background: #eef2ff;
+            border-radius: 20px;
+            margin: 5px;
+        }
+        
+        h1,
+        h2,
+        h3 {
+            color: #212529;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <h1>Job Prediction Results</h1>
+
+        <div class="card">
+            <h2>Top Job Matches</h2>
+
+            {% if result.matches %} {% for match in result.matches %}
+            <div class="job">
+                <div class="icon">
+                    <i class="fas fa-briefcase"></i>
+                </div>
+
+                <div style="flex:1">
+                    <h3>{{ match.profession }}</h3>
+                    <p>Matched {{ match.match_count }} / {{ match.total_skills }} skills</p>
+
+                    <div style="display:flex;align-items:center;gap:15px">
+                        <div class="progress" style="flex:1">
+                            <!-- ✅ FINAL & CORRECT -->
+                            <div class="bar" style="width: {{ match.match_percent }}%;"></div>
+                        </div>
+                        <strong>{{ match.match_percent }}%</strong>
+                    </div>
+                </div>
+            </div>
+            {% endfor %} {% else %}
+            <p>No job matches found.</p>
+            {% endif %}
+
+            <hr style="margin:30px 0">
+
+            <h2>Your Skills</h2>
+            {% if result.skills %} {% for skill in result.skills %}
+            <span class="tag">{{ skill }}</span> {% endfor %} {% else %}
+            <p>No skills detected.</p>
+            {% endif %}
+
+            <hr style="margin:30px 0">
+
+            <h2>Career Advice</h2>
+            <ul>
+                <li>Strengthen skills that appear frequently in job descriptions</li>
+                <li>Tailor your resume for each role</li>
+                <li>Add measurable achievements</li>
+                <li>Build missing skills through projects or courses</li>
+            </ul>
+
+            <br>
+            <a href="/" style="text-decoration:none;color:#4361ee;font-weight:bold">
+      ← Analyze another resume
+    </a>
+        </div>
+    </div>
+
+</body>
+
+</html>
