@@ -1,6 +1,6 @@
 # AI Resume Analyzer (Flask + ATS Scoring)
 
-An intelligent Resume Analyzer built with Flask that evaluates resumes using ATS (Applicant Tracking System) principles. It provides a score, matches relevant job roles, and suggests improvements to increase selection chances.
+An intelligent Resume Analyzer built with Flask that evaluates resumes using ATS (Applicant Tracking System) principles. It provides a score, matches relevant job roles, and suggests improvements to increase selection chances. > A Flask-based intelligent system that analyzes resumes using ATS scoring, semantic NLP techniques, and job-role matching to improve candidate selection chances.
 
 ---
 
@@ -96,16 +96,17 @@ Screenshots
 
 ```
 screenshots/
-│── home.png
-│── upload.png
-│── result.png
+│── Home.png
+│── JP.png
+│── ATS Resume Checker.png
+│── ATS Compatibility Score.png
 ```
 
 Example:
 
 ```md
-![Home](screenshots/home.png)
-![Result](screenshots/result.png)
+![Home](screenshots/Home.png)
+![Result](screenshots/JP.png)
 ```
 
 ---
